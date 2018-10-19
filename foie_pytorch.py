@@ -133,9 +133,9 @@ if __name__ == "__main__":
     parser.add_argument('--csvval',
                         default="../../JFR/foie_validation_setEqui.csv",
                         help="csv file")
-    parser.add_argument('--batch_size', type=int, default=2,
+    parser.add_argument('--batch_size', type=int, default=5,
                         help='input batch size for training (default: 4)')
-    parser.add_argument('--val_batch_size', type=int, default=2,
+    parser.add_argument('--val_batch_size', type=int, default=5,
                         help='input batch size for validation (default: 4)')
     parser.add_argument('--epochs', type=int, default=1,
                         help='number of epochs to train (default: 10000)')
