@@ -9,6 +9,7 @@ from model_pytorch import Model1
 import  dataloaders_pytorch as foieDataLoaders
 from tqdm import tqdm
 import utils_pytorch as utils
+import numpy as np
 
 def validate(valloader, model, criterion,device,lossWeights):
     model.eval()
@@ -104,12 +105,12 @@ def run(imgf,imgfval,csv,csvval,train_batch_size, val_batch_size, epochs, lr,  l
 
     writer = utils.create_summary_writer(model1, train_loader, log_dir)
 
+    #media(val_loader,device)
 
     for i in tqdm(range(epochs)):
         train_loss, train_acc1, train_acc2, train_acc3= train(train_loader,model1,criterion,optimizer,device,lossWeights)
         print("Epoch {} => Train Loss: {:.4f}, Accuracy Sain: {:.4f}, Accuracy Malin: {:.4f}, Accuracy Anomaly: {:.4f}".format(i,train_loss, train_acc1, train_acc2, train_acc3))
         writer.add_scalar("training/avg_loss", train_loss,i)
-
         val_loss, val_acc1, val_acc2, val_acc3 = validate(val_loader, model1, criterion,device,lossWeights)
         print("Epoch {} => Test Loss: {:.4f}, Accuracy Sain: {:.4f}, Accuracy Malin: {:.4f}, Accuracy Anomaly: {:.4f}".format(i,val_loss, val_acc1, val_acc2, val_acc3))     
         writer.add_scalar("validation/avg_loss", val_loss,i)
@@ -132,9 +133,9 @@ if __name__ == "__main__":
     parser.add_argument('--csvval',
                         default="../../JFR/foie_validation_setEqui.csv",
                         help="csv file")
-    parser.add_argument('--batch_size', type=int, default=20,
+    parser.add_argument('--batch_size', type=int, default=25,
                         help='input batch size for training (default: 4)')
-    parser.add_argument('--val_batch_size', type=int, default=20,
+    parser.add_argument('--val_batch_size', type=int, default=25,
                         help='input batch size for validation (default: 4)')
     parser.add_argument('--epochs', type=int, default=1,
                         help='number of epochs to train (default: 10000)')
