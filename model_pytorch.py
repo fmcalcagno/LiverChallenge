@@ -7,9 +7,14 @@ class Model1(nn.Module):
         super(Model1, self).__init__()
         self.base_model = models.resnet50(pretrained=True)
         self.last_layer= torch.nn.Sequential(*list(self.base_model.children())[:-2])
-        
-        for p in self.base_model.parameters():
-            p.requires_grad = False
+        ct = 0
+        for child in self.last_layer.children():
+            ct += 1
+            if ct < 25:
+                for param in child.parameters():
+                    param.requires_grad = False
+        #for p in self.base_model.parameters():
+        #    p.requires_grad = False
 
         self.groupfinal = nn.Sequential(
             nn.Linear(2048*7*7,512),
